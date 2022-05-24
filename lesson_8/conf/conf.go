@@ -32,23 +32,19 @@ func Flag() Conf {
 
 }
 
-func Valid() {
-
-	s := "postgres://db-user:db-password@petstore-db:5432/petstore?sslmode=disable"
-
-	u, err := url.Parse(s)
-	if err != nil {
-		panic(err)
+func Valid(s *Conf) {
+	_, err1 := url.Parse(s.db_url)
+	if err1 != nil {
+		panic(err1)
 	}
-	fmt.Println(u.Scheme)
 
-	fmt.Println(u.User)
-	fmt.Println(u.User.Username())
-	p, _ := u.User.Password()
-	fmt.Println(p)
+	_, err2 := url.Parse(s.sentry_url)
+	if err2 != nil {
+		panic(err2)
+	}
 
-	fmt.Println(u.Host)
-	host, port, _ := net.SplitHostPort(u.Host)
-	fmt.Println(host)
-	fmt.Println(port)
+	_, err3 := url.Parse(s.jaeger_url)
+	if err3 != nil {
+		panic(err3)
+	}
 }
